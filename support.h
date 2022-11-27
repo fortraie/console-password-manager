@@ -11,5 +11,6 @@ std::string decode(std::string input, size_t shift);
 int stringToInt(std::string input);
 
 std::string timestamp();
+std::string fileName(std::string file_path);
 
 #endif //SUPPORT_H

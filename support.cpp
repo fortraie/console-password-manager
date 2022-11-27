@@ -104,3 +104,14 @@ std::string timestamp() {
 
     return output;
 }
+
+/**
+* Provides with file name from the given file path.
+*
+* @param file_path Path to the file.
+* @return Name of the file.
+*/
+std::string fileName(std::string file_path) {
+    std::string output = file_path.substr(file_path.find_last_of("/\\") + 1);
+    return output.substr(0, output.find_last_of('.'));
+}
