@@ -5,8 +5,8 @@
 
 std::string randomString(size_t length);
 
-std::string encode(std::string input, size_t shift);
-std::string decode(std::string input, size_t shift);
+std::string encode(std::string input, int shift);
+std::string decode(std::string input, int shift);
 
 int stringToInt(std::string input);
 

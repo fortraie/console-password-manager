@@ -68,6 +68,13 @@ void logInUser() {
 
     if (status == 0) {
         lastAccess(file_path);
+        std::set<Category> categories = listCategories(file_path, password);
+        for (const Category& category : categories) {
+            std::cout << category.getName() << std::endl;
+        }
+    } else {
+        std::cout << "Wrong password!" << std::endl;
+        initialize();
     }
 };
 
@@ -87,6 +94,10 @@ void registerUser() {
 }
 
 
+/**
+* Allows the user to choose a custom file path.
+* @return Path to the file chosen by the user.
+*/
 std::string chooseCustomFilePath() {
     std::cout << "Enter the full file path to your database:" << std::endl;
 
@@ -97,6 +108,10 @@ std::string chooseCustomFilePath() {
 }
 
 
+/**
+* Informs about the last access to the database.
+* @param file_path File path to the database.
+*/
 void lastAccess(std::string file_path) {
     std::string last_access = readTimestamp(file_path);
     if (last_access.empty()) {

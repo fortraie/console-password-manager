@@ -29,19 +29,13 @@ std::string randomString(size_t length) {
 * @param shift Shift made.
 * @return Encoded string of characters.
 */
-std::string encode(std::string input, size_t shift) {
+std::string encode(std::string input, int shift) {
     if (shift == 0) shift = kDefaultShift;
 
     std::string output;
 
-    for (size_t i = 0; i < input.length(); i++) {
-        size_t position = kCharset.find(input[i]);
-        if (position == std::string::npos) {
-            output += input[i];
-        } else {
-            size_t new_position = (position + shift) % kCharset.length();
-            output += kCharset[new_position];
-        }
+    for (char c : input) {
+        output = output + (char) (c + shift);
     }
 
     return output;
@@ -49,24 +43,18 @@ std::string encode(std::string input, size_t shift) {
 
 
 /**
-* Decodes given string of characters with caesar cipher.
+* Decodes given string of characters encoded with caesar cipher.
 *
 * @param shift Shift made.
 * @return Decoded string of characters.
 */
-std::string decode(std::string input, size_t shift) {
+std::string decode(std::string input, int shift) {
     if (shift == 0) shift = kDefaultShift;
 
     std::string output;
 
-    for (size_t i = 0; i < input.length(); i++) {
-        size_t position = kCharset.find(input[i]);
-        if (position == std::string::npos) {
-            output += input[i];
-        } else {
-            size_t new_position = (position - shift) % kCharset.length();
-            output += kCharset[new_position];
-        }
+    for (char c : input) {
+        output = output + (char) (c - shift);
     }
 
     return output;

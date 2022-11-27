@@ -5,6 +5,8 @@
 #include <set>
 
 #include "support.h"
+#include "../classes/Category.h"
+#include "../classes/Entry.h"
 
 const size_t kFileLength {8};
 const std::string kExtensionName {"passdb"};
@@ -12,8 +14,17 @@ const std::string kHomeDirectory {getenv ("HOME")};
 const std::string kTimestampSignature {"[TS]"};
 const std::string kCreationSignature{"[CR]"};
 
+const std::string kCategorySignature {"[CT]"};
+const std::string kInactiveCategorySignature {"[XC]"};
+
+const std::string kEntrySignature {"[EN]"};
+const std::string kInactiveEntrySignature {"[XE]"};
+
 
 void writeTimestamp(std::string file_path);
+
+void addCategory(std::string file_path, std::string password, Category category);
+void removeCategory(std::string file_path, std::string password, Category category);
 
 
 /**
@@ -35,6 +46,12 @@ std::string createDatabase(std::string password) {
 
     output_file << kCreationSignature << file_name << encode(password, stringToInt(password)) << '\n';
     output_file.close();
+
+    addCategory(file_path, password, Category("Entertainment"));
+    addCategory(file_path, password, Category("Work"));
+    addCategory(file_path, password, Category("Shopping"));
+
+    removeCategory(file_path, password, Category("Entertainment"));
 
     return file_name;
 }
@@ -109,4 +126,45 @@ std::string readTimestamp(std::string file_path) {
     if (timestamp.empty()) return "";
 
     return decode(timestamp.substr(kTimestampSignature.length()), 0);
+}
+
+
+void addCategory(std::string file_path, std::string password, Category category) {
+    std::ofstream output_file(file_path, std::fstream::app);
+    output_file << kCategorySignature << encode(category.getName(), stringToInt(password)) << '\n';
+    output_file.close();
+}
+
+void removeCategory(std::string file_path, std::string password, Category category) {
+    std::ofstream output_file(file_path, std::fstream::app);
+    output_file << kInactiveCategorySignature << encode(category.getName(), stringToInt(password)) << '\n';
+    output_file.close();
+}
+
+
+/**
+ * Reads all categories from the database file, removes inactive ones and decodes them.
+ *
+ * @param file_path File path where the categories will be read.
+ * @param password User's password for the database.
+ * @return Set of all active categories.
+ */
+std::set<Category> listCategories(std::string file_path, std::string password) {
+    std::set<Category> output;
+
+    std::ifstream input_file (file_path);
+    std::string line;
+
+    while (std::getline(input_file, line)) {
+        if (line.substr(0, kCategorySignature.length()) == kCategorySignature) {
+            Category category(decode(line.substr(kCategorySignature.length()), stringToInt(password)));
+            output.insert(category);
+        }
+        if (line.substr(0, kInactiveCategorySignature.length()) == kInactiveCategorySignature) {
+            Category category(decode(line.substr(kInactiveCategorySignature.length()), stringToInt(password)));
+            output.erase(category);
+        }
+    }
+
+    return output;
 }

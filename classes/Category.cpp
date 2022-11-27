@@ -13,3 +13,27 @@ const std::string &Category::getName() const {
 void Category::setName(const std::string &name) {
     Category::name = name;
 }
+
+bool Category::operator==(const Category &rhs) const {
+    return name == rhs.name;
+}
+
+bool Category::operator!=(const Category &rhs) const {
+    return !(rhs == *this);
+}
+
+bool Category::operator<(const Category &rhs) const {
+    return name < rhs.name;
+}
+
+bool Category::operator>(const Category &rhs) const {
+    return rhs < *this;
+}
+
+bool Category::operator<=(const Category &rhs) const {
+    return !(rhs < *this);
+}
+
+bool Category::operator>=(const Category &rhs) const {
+    return !(*this < rhs);
+}

@@ -16,6 +16,18 @@ public:
 
     const std::string &getName() const;
     void setName(const std::string &name);
+
+    bool operator==(const Category &rhs) const;
+
+    bool operator!=(const Category &rhs) const;
+
+    bool operator<(const Category &rhs) const;
+
+    bool operator>(const Category &rhs) const;
+
+    bool operator<=(const Category &rhs) const;
+
+    bool operator>=(const Category &rhs) const;
 };
 
 
