@@ -1,6 +1,7 @@
 #include <iostream>
-#include "communication.h"
-#include "actionshandling.h"
+#include "processing/communication.h"
+#include "processing/actionshandling.h"
+#include "classes/Entry.h"
 
 int main() {
     initialize();
