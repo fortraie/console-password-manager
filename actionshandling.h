@@ -5,6 +5,7 @@
 #ifndef ACTIONSHANDLING_H
 #define ACTIONSHANDLING_H
 
-void registerUser();
+std::string createDatabase(std::string password);
+std::string listDatabases();
 
 #endif //ACTIONSHANDLING_H

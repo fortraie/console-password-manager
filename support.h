@@ -3,8 +3,13 @@
 
 #include <string>
 
-std::string generateRandomString(size_t length);
+std::string randomString(size_t length);
+
 std::string encode(std::string input, size_t shift);
 std::string decode(std::string input, size_t shift);
+
+int stringToInt(std::string input);
+
+std::string timestamp();
 
 #endif //SUPPORT_H

@@ -1,8 +1,6 @@
-#include "actionshandling.h"
-#include "communication.h"
-#include "support.h"
-
 #include <iostream>
+#include "communication.h"
+#include "actionshandling.h"
 
 int main() {
     initialize();
